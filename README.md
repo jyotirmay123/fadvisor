@@ -209,47 +209,57 @@ pytest fadvisor/tests/
 
 ### Last Test Run
 
-==================================================== test session starts
-===================================================== platform darwin -- Python 3.11.11,
-pytest-8.4.1, pluggy-1.6.0 -- /Users/administrator/Desktop/work/fadvisor/.venv/bin/python3.11
-cachedir: .pytest_cache rootdir: /Users/administrator/Desktop/work/fadvisor configfile: pytest.ini
-testpaths: app plugins: asyncio-1.1.0, anyio-4.10.0, cov-6.2.1 asyncio: mode=Mode.STRICT,
-asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function collected 14 items
+#### 🧪 Test Results Summary
 
-app/tests/test_agents.py::TestFinancialAdvisorAgent::test_agent_creation PASSED [ 7%]
-app/tests/test_agents.py::TestFinancialAdvisorAgent::test_agent_has_tools PASSED [ 14%]
-app/tests/test_agents.py::TestMarketAnalystAgent::test_agent_creation PASSED [ 21%]
-app/tests/test_agents.py::TestMarketAnalystAgent::test_agent_has_tools PASSED [ 28%]
-app/tests/test_agents.py::TestPortfolioManagerAgent::test_agent_creation PASSED [ 35%]
-app/tests/test_agents.py::TestPortfolioManagerAgent::test_agent_has_tools PASSED [ 42%]
-app/tests/test_agents.py::TestMainAgent::test_agent_creation PASSED [ 50%]
-app/tests/test_agents.py::TestMainAgent::test_agent_has_subagents PASSED [ 57%]
-app/tests/test_tools.py::TestStockDataFetcher::test_get_ticker_info PASSED [ 64%]
-app/tests/test_tools.py::TestStockDataFetcher::test_get_price_history PASSED [ 71%]
-app/tests/test_tools.py::TestPortfolioAnalyzer::test_analyze_portfolio PASSED [ 78%]
-app/tests/test_tools.py::TestAgentTools::test_get_stock_info_tool PASSED [ 85%]
-app/tests/test_tools.py::TestAgentTools::test_analyze_technical_tool PASSED [ 92%]
-app/tests/test_tools.py::TestAgentTools::test_calculate_portfolio_allocation PASSED [100%]
+| Metric | Value |
+|--------|-------|
+| **Total Tests** | 14 |
+| **Passed** | ✅ 14 |
+| **Failed** | ❌ 0 |
+| **Execution Time** | ⏱️ 4.75s |
+| **Python Version** | 🐍 3.11.11 |
 
-======================================================= tests coverage
-======================================================= ********\*\*********\_********\*\*********
-coverage: platform darwin, python 3.11.11-final-0 ********\*\*********\_\_********\*\*********
+#### 📊 Test Coverage Report
 
-## Name Stmts Miss Cover
+| Module | Statements | Missed | Coverage | Status |
+|--------|------------|--------|----------|--------|
+| `app/__init__.py` | 2 | 0 | 🟢 **100%** | ✅ |
+| `app/agents/__init__.py` | 5 | 0 | 🟢 **100%** | ✅ |
+| `app/agents/financial_advisor.py` | 13 | 0 | 🟢 **100%** | ✅ |
+| `app/agents/market_analyst.py` | 13 | 0 | 🟢 **100%** | ✅ |
+| `app/agents/portfolio_manager.py` | 13 | 0 | 🟢 **100%** | ✅ |
+| `app/agents/main_agent.py` | 22 | 3 | 🟡 **86%** | ⚠️ |
+| `app/config.py` | 26 | 3 | 🟡 **88%** | ⚠️ |
+| `app/utils/llm_wrapper.py` | 28 | 6 | 🟡 **79%** | ⚠️ |
+| `app/tools/agent_tools.py` | 59 | 34 | 🔴 **42%** | ❌ |
+| `app/tools/financial_tools.py` | 149 | 67 | 🔴 **55%** | ❌ |
+| `app/tools/news_tools.py` | 127 | 108 | 🔴 **15%** | ❌ |
+| `app/tests/__init__.py` | 0 | 0 | 🟢 **100%** | ✅ |
+| `app/tests/test_agents.py` | 69 | 0 | 🟢 **100%** | ✅ |
+| `app/tests/test_tools.py` | 56 | 0 | 🟢 **100%** | ✅ |
+| `app/tools/__init__.py` | 4 | 0 | 🟢 **100%** | ✅ |
+| `app/utils/__init__.py` | 2 | 0 | 🟢 **100%** | ✅ |
+| `app/agent.py` | 8 | 8 | 🔴 **0%** | ❌ |
+| `app/api_server.py` | 130 | 130 | 🔴 **0%** | ❌ |
+| `app/main.py` | 111 | 111 | 🔴 **0%** | ❌ |
+| `app/setup.py` | 4 | 4 | 🔴 **0%** | ❌ |
 
-app/**init**.py 2 0 100% app/agent.py 8 8 0% app/agents/**init**.py 5 0 100%
-app/agents/financial_advisor.py 13 0 100% app/agents/main_agent.py 22 3 86%
-app/agents/market_analyst.py 13 0 100% app/agents/portfolio_manager.py 13 0 100% app/api_server.py
-130 130 0% app/config.py 26 3 88% app/main.py 111 111 0% app/setup.py 4 4 0% app/tests/**init**.py 0
-0 100% app/tests/test_agents.py 69 0 100% app/tests/test_tools.py 56 0 100% app/tools/**init**.py 4
-0 100% app/tools/agent_tools.py 59 34 42% app/tools/financial_tools.py 149 67 55%
-app/tools/news_tools.py 127 108 15% app/utils/**init**.py 2 0 100% app/utils/llm_wrapper.py 28 6 79%
+**Overall Coverage: 🟡 44% (841 statements, 474 missed)**
 
----
+> 📁 Coverage reports generated: `htmlcov/` directory and `out/coverage.xml`
 
-TOTAL 841 474 44% Coverage HTML written to dir htmlcov Coverage XML written to file out/coverage.xml
-===================================================== 14 passed in 4.75s
-=====================================================
+#### 🎯 Test Categories
+
+| Category | Tests | Status |
+|----------|-------|--------|
+| **Agent Tests** | 8 | ✅ All Passed |
+| **Tool Tests** | 6 | ✅ All Passed |
+| **Total** | 14 | ✅ All Passed |
+
+**Legend:**
+- 🟢 **100%** - Excellent coverage
+- 🟡 **70-99%** - Good coverage  
+- 🔴 **<70%** - Needs improvement
 
 ## Development
 
