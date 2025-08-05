@@ -54,6 +54,8 @@ venv/
 ENV/
 env/
 .venv
+node_modules/
+.out/
 
 # IDEs
 .vscode/

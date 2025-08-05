@@ -25,6 +25,7 @@ FAdvisor uses Google ADK's multi-agent system with three specialized agents:
 ## Requirements
 
 - Python 3.10+
+- Poetry (for dependency management)
 - OpenRouter API key (for LLM access)
 - Optional: Financial data API keys (Alpha Vantage, Finnhub, NewsAPI)
 
@@ -37,20 +38,25 @@ git clone https://github.com/yourusername/app.git
 cd fadvisor
 ```
 
-2. Create a virtual environment:
+2. Install Poetry (if not already installed):
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+curl -sSL https://install.python-poetry.org | python3 -
 ```
 
-3. Install dependencies:
+3. Install dependencies using Poetry:
 
 ```bash
-pip install -r requirements.txt
+poetry install
 ```
 
-4. Set up environment variables:
+4. Activate the virtual environment:
+
+```bash
+poetry shell
+```
+
+5. Set up environment variables:
 
 ```bash
 cp .env.example .env
@@ -76,7 +82,13 @@ Optional API keys for enhanced features:
 Run the interactive CLI:
 
 ```bash
-python -m app.main
+poetry run python -m app.main
+```
+
+Or use the installed script:
+
+```bash
+poetry run fadvisor
 ```
 
 Example queries:
@@ -91,7 +103,13 @@ Example queries:
 Start the FastAPI server:
 
 ```bash
-python -m app.api_server
+poetry run python -m app.api_server
+```
+
+Or use the installed script:
+
+```bash
+poetry run fadvisor-api
 ```
 
 The API will be available at `http://localhost:8000`
@@ -139,7 +157,7 @@ from . import agent
 4. Run ADK web:
 
 ```bash
-adk web
+poetry run adk web
 ```
 
 ## Available Models
@@ -199,50 +217,92 @@ Recommendations:
 3. Consider taking partial profits on MSFT (up 25%)
 ```
 
-## Testing
+## Development
+
+### Setting up Development Environment
+
+1. Install development dependencies:
+
+```bash
+poetry install --with dev
+```
+
+2. Install pre-commit hooks:
+
+```bash
+poetry run pre-commit install
+```
+
+### Running Tests
 
 Run the test suite:
 
 ```bash
-pytest fadvisor/tests/
+poetry run pytest
+```
+
+Run tests with coverage:
+
+```bash
+poetry run pytest --cov=app
+```
+
+### Code Formatting and Linting
+
+Format code with Black:
+
+```bash
+poetry run black .
+```
+
+Check code with flake8:
+
+```bash
+poetry run flake8 .
+```
+
+Type checking with mypy:
+
+```bash
+poetry run mypy app/
 ```
 
 ### Last Test Run
 
 #### 🧪 Test Results Summary
 
-| Metric | Value |
-|--------|-------|
-| **Total Tests** | 14 |
-| **Passed** | ✅ 14 |
-| **Failed** | ❌ 0 |
-| **Execution Time** | ⏱️ 4.75s |
+| Metric             | Value      |
+| ------------------ | ---------- |
+| **Total Tests**    | 14         |
+| **Passed**         | ✅ 14      |
+| **Failed**         | ❌ 0       |
+| **Execution Time** | ⏱️ 4.75s   |
 | **Python Version** | 🐍 3.11.11 |
 
 #### 📊 Test Coverage Report
 
-| Module | Statements | Missed | Coverage | Status |
-|--------|------------|--------|----------|--------|
-| `app/__init__.py` | 2 | 0 | 🟢 **100%** | ✅ |
-| `app/agents/__init__.py` | 5 | 0 | 🟢 **100%** | ✅ |
-| `app/agents/financial_advisor.py` | 13 | 0 | 🟢 **100%** | ✅ |
-| `app/agents/market_analyst.py` | 13 | 0 | 🟢 **100%** | ✅ |
-| `app/agents/portfolio_manager.py` | 13 | 0 | 🟢 **100%** | ✅ |
-| `app/agents/main_agent.py` | 22 | 3 | 🟡 **86%** | ⚠️ |
-| `app/config.py` | 26 | 3 | 🟡 **88%** | ⚠️ |
-| `app/utils/llm_wrapper.py` | 28 | 6 | 🟡 **79%** | ⚠️ |
-| `app/tools/agent_tools.py` | 59 | 34 | 🔴 **42%** | ❌ |
-| `app/tools/financial_tools.py` | 149 | 67 | 🔴 **55%** | ❌ |
-| `app/tools/news_tools.py` | 127 | 108 | 🔴 **15%** | ❌ |
-| `app/tests/__init__.py` | 0 | 0 | 🟢 **100%** | ✅ |
-| `app/tests/test_agents.py` | 69 | 0 | 🟢 **100%** | ✅ |
-| `app/tests/test_tools.py` | 56 | 0 | 🟢 **100%** | ✅ |
-| `app/tools/__init__.py` | 4 | 0 | 🟢 **100%** | ✅ |
-| `app/utils/__init__.py` | 2 | 0 | 🟢 **100%** | ✅ |
-| `app/agent.py` | 8 | 8 | 🔴 **0%** | ❌ |
-| `app/api_server.py` | 130 | 130 | 🔴 **0%** | ❌ |
-| `app/main.py` | 111 | 111 | 🔴 **0%** | ❌ |
-| `app/setup.py` | 4 | 4 | 🔴 **0%** | ❌ |
+| Module                            | Statements | Missed | Coverage    | Status |
+| --------------------------------- | ---------- | ------ | ----------- | ------ |
+| `app/__init__.py`                 | 2          | 0      | 🟢 **100%** | ✅     |
+| `app/agents/__init__.py`          | 5          | 0      | 🟢 **100%** | ✅     |
+| `app/agents/financial_advisor.py` | 13         | 0      | 🟢 **100%** | ✅     |
+| `app/agents/market_analyst.py`    | 13         | 0      | 🟢 **100%** | ✅     |
+| `app/agents/portfolio_manager.py` | 13         | 0      | 🟢 **100%** | ✅     |
+| `app/agents/main_agent.py`        | 22         | 3      | 🟡 **86%**  | ⚠️     |
+| `app/config.py`                   | 26         | 3      | 🟡 **88%**  | ⚠️     |
+| `app/utils/llm_wrapper.py`        | 28         | 6      | 🟡 **79%**  | ⚠️     |
+| `app/tools/agent_tools.py`        | 59         | 34     | 🔴 **42%**  | ❌     |
+| `app/tools/financial_tools.py`    | 149        | 67     | 🔴 **55%**  | ❌     |
+| `app/tools/news_tools.py`         | 127        | 108    | 🔴 **15%**  | ❌     |
+| `app/tests/__init__.py`           | 0          | 0      | 🟢 **100%** | ✅     |
+| `app/tests/test_agents.py`        | 69         | 0      | 🟢 **100%** | ✅     |
+| `app/tests/test_tools.py`         | 56         | 0      | 🟢 **100%** | ✅     |
+| `app/tools/__init__.py`           | 4          | 0      | 🟢 **100%** | ✅     |
+| `app/utils/__init__.py`           | 2          | 0      | 🟢 **100%** | ✅     |
+| `app/agent.py`                    | 8          | 8      | 🔴 **0%**   | ❌     |
+| `app/api_server.py`               | 130        | 130    | 🔴 **0%**   | ❌     |
+| `app/main.py`                     | 111        | 111    | 🔴 **0%**   | ❌     |
+| `app/setup.py`                    | 4          | 4      | 🔴 **0%**   | ❌     |
 
 **Overall Coverage: 🟡 44% (841 statements, 474 missed)**
 
@@ -250,30 +310,35 @@ pytest fadvisor/tests/
 
 #### 🎯 Test Categories
 
-| Category | Tests | Status |
-|----------|-------|--------|
-| **Agent Tests** | 8 | ✅ All Passed |
-| **Tool Tests** | 6 | ✅ All Passed |
-| **Total** | 14 | ✅ All Passed |
+| Category        | Tests | Status        |
+| --------------- | ----- | ------------- |
+| **Agent Tests** | 8     | ✅ All Passed |
+| **Tool Tests**  | 6     | ✅ All Passed |
+| **Total**       | 14    | ✅ All Passed |
 
 **Legend:**
+
 - 🟢 **100%** - Excellent coverage
-- 🟡 **70-99%** - Good coverage  
+- 🟡 **70-99%** - Good coverage
 - 🔴 **<70%** - Needs improvement
 
-## Development
+## Project Structure
 
 The project structure:
 
 ```
 fadvisor/
-├── agents/          # ADK agent definitions
-├── tools/           # Financial analysis tools
-├── utils/           # LiteLLM wrapper and utilities
-├── tests/           # Test suite
-├── main.py          # CLI interface
-├── api_server.py    # FastAPI server
-└── config.py        # Configuration
+├── app/
+│   ├── agents/          # ADK agent definitions
+│   ├── tools/           # Financial analysis tools
+│   ├── utils/           # LiteLLM wrapper and utilities
+│   ├── tests/           # Test suite
+│   ├── main.py          # CLI interface
+│   ├── api_server.py    # FastAPI server
+│   └── config.py        # Configuration
+├── pyproject.toml       # Poetry configuration and dependencies
+├── poetry.lock          # Locked dependency versions
+└── README.md           # This file
 ```
 
 ## Contributing
@@ -282,8 +347,11 @@ Contributions are welcome! Please:
 
 1. Fork the repository
 2. Create a feature branch
-3. Add tests for new functionality
-4. Submit a pull request
+3. Install development dependencies: `poetry install --with dev`
+4. Add tests for new functionality
+5. Ensure all tests pass: `poetry run pytest`
+6. Format your code: `poetry run black .`
+7. Submit a pull request
 
 ## Disclaimer
 

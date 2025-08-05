@@ -1,0 +1,66 @@
+[project]
+name = "fadvisor"
+version = "0.1.0"
+description = "AI Financial Advisor using Google Agent Development Kit"
+authors = [{name = "FAdvisor Team"}]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "google-adk>=0.1.0",
+    "litellm>=1.65.5",
+    "python-dotenv>=1.0.0",
+    "yfinance>=0.2.18",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "ta>=0.10.2",
+    "newsapi-python>=0.2.7",
+    "finnhub-python>=2.4.0",
+    "aiohttp>=3.9.0",
+    "httpx>=0.25.0",
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "pydantic>=2.5.0",
+    "python-dateutil>=2.8.0",
+    "pytz>=2023.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "pre-commit>=2.18.0",
+]
+
+[project.scripts]
+fadvisor = "app.main:main"
+fadvisor-api = "app.api_server:main"
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# This section tells ADK how to find our agent
+[tool.adk.agents]
+fadvisor = "app.agents.main_agent:create_fadvisor_agent"
+root = "agent:root_agent"
+
+# Restrict ADK to only scan specific directories
+[tool.adk]
+# Only scan the agents directory for additional agents
+agent_directories = ["app/agents"]
+# Exclude other directories from agent discovery
+exclude_directories = ["out", "htmlcov", "node_modules"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311']
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+asyncio_mode = "auto"
