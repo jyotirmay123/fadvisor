@@ -1,0 +1,51 @@
+---
+repos:
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+      - id: pyupgrade
+        args: [--py311-plus, --keep-runtime-typing]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        args: [--print-width=100, --prose-wrap=always]
+        exclude: ^(node_modules).*$
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.0
+    hooks:
+      - id: bandit
+        name: bandit
+        description: "Bandit is a tool for finding common security issues in Python code"
+        entry: bandit
+        language: python
+        language_version: python3
+        types: [python]
+        stages:
+          - manual
+          - pre-commit
+        args: ["-s", "B101,B104", "-x", "tests/"]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --line-length=100, --select=I] #, --py39-plus, --linters=pylint,black,flake8,pyupgrade,reorder-python-imports,bandit,mypy,prettier,check-yaml,trailing-whitespace,end-of-file-fixer]
+        exclude: ^(helm_chart).*$
+      - id: ruff-format
+        exclude: ^(helm_chart).*$
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        stages:
+          - manual
+        args: ["--py-version=3.11", "--max-line-length=100", "--extension-pkg-whitelist='pydantic'"]

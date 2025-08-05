@@ -2,15 +2,17 @@
 ADK Web interface agent configuration for FAdvisor
 This file enables running the full FAdvisor agent with 'adk web'
 """
+
 import os
 import sys
+
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
 # Add fadvisor to Python path if needed
-if 'fadvisor' not in sys.path:
+if "fadvisor" not in sys.path:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Import the main FAdvisor agent
